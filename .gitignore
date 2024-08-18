@@ -1,0 +1,30 @@
+
+# Visual Studio-related directories
+.vs/
+.vscode/
+
+# Build directories
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Application-specific files
+appsettings.Development.json
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ASP.NET related files
+#wwwroot/
