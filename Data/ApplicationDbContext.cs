@@ -1,24 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FEALVES.AspNetMVCCore.Boilerpate.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
-namespace FEALVES.AspNetMVCCore.Boilerpate.Data;
-
-public class ApplicationDbContext : DbContext
+namespace FEALVES.AspNetMVCCore.Boilerpate.Data
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
-    }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
 
-    public DbSet<MyEntity> MyEntities { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        // Configure your entities here
+        // Your DbSets go here
     }
 }
 
-public class MyEntity
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-}

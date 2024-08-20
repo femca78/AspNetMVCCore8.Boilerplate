@@ -2,6 +2,7 @@ using FEALVES.AspNetMVCCore.Boilerpate.Data;
 using FEALVES.AspNetMVCCore.Boilerpate.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FEALVES.AspNetMVCCore.Boilerpate.Controllers
 {
@@ -21,6 +22,13 @@ namespace FEALVES.AspNetMVCCore.Boilerpate.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

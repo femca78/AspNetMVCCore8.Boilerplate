@@ -1,50 +1,23 @@
 using FEALVES.AspNetMVCCore.Boilerpate.Data;
+using FEALVES.AspNetMVCCore.Boilerpate.Models;
+using FEALVES.AspNetMVCCore.Boilerpate.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure DbContext and Identity
-builder.Services.AddSingleton<ApplicationDbContextFactory>();
+// Configure services
+Startup.ConfigureServices(builder.Services, builder.Configuration);
 
-builder.Services.AddScoped(serviceProvider =>
-{
-    var factory = serviceProvider.GetRequiredService<ApplicationDbContextFactory>();
-    return factory.CreateDbContext();
-});
-
-
-builder.Services.AddControllersWithViews();
-
-// Add logging
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-
+// Build the application
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-else
-{
-    app.UseDeveloperExceptionPage(); // Detailed error pages for development
-}
+// Configure the HTTP request pipeline
+Startup.ConfigureMiddleware(app);
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+// Ensure the database is created, apply migrations, and create roles
+await Startup.InitializeDatabase(app);
 
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
+// Run the application
 app.Run();
